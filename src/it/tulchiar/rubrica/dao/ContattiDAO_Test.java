@@ -30,7 +30,9 @@ public class ContattiDAO_Test {
 		
 //XXX	MODIFICA CONTATTO
 		Contatto c = new Contatto();
-		c.setNome("Prova");
+		c.setNome("Provola");
+		c.setCognome("ProvaCognome");
+		c.setTelefono("123456789");
 		
 		System.out.println("ID CONTATTO TEST:" + dao.getContattoById(1).getIdContatto());
 		

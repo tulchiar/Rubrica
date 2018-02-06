@@ -3,9 +3,7 @@ package it.tulchiar.rubrica.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLData;
 import java.sql.SQLException;
-import java.sql.SQLInput;
 import java.util.ArrayList;
 
 import it.tulchiar.rubrica.bean.Contatto;
@@ -143,12 +141,12 @@ public class ContattiDAO {
 				"SET" + 
 				"`nome` = ? ," + 
 				"`cognome` = ? ," + 
-//				"`telefono` = ? ," + 
-//				"`fax` = ? ," + 
-//				"`cellulare` = ? ," + 
-//				"`email` = ? ," + 
-//				"`pec` = ? ," + 
-//				"`passwordPec` = ? ," + 
+				"`telefono` = ? ," + 
+				"`fax` = ? ," + 
+				"`cellulare` = ? ," + 
+				"`email` = ? ," + 
+				"`pec` = ? ," + 
+				"`passwordPec` = ? ," + 
 				"`note` = ? " + 
 				"WHERE `idcontatto` = ?;";
 		
@@ -161,13 +159,13 @@ public class ContattiDAO {
 				System.out.println("NOME: " + contatto.getNome());
 				ps.setString(1, contatto.getNome());
 			} else {
-				ps.setNull(1, java.sql.Types.NULL);
+				throw new RuntimeException("Nome non può essere null.");
 			}
 			
 			if(contatto.getCognome() != null) {
 				ps.setString(2, contatto.getCognome());
 			} else {
-				ps.setNull(2, java.sql.Types.NULL);
+				throw new RuntimeException("Cognome no può essere null.");
 			}
 			
 			if(contatto.getTelefono() != null) {
@@ -193,15 +191,30 @@ public class ContattiDAO {
 			} else {
 				ps.setNull(6, java.sql.Types.NULL);
 			}
+
+			if(contatto.getPec() != null) {
+				ps.setString(7, contatto.getPec());
+			} else {
+				ps.setNull(7, java.sql.Types.NULL);
+			}
+
+			if(contatto.getPasswordPec() != null) {
+				ps.setString(8, contatto.getPasswordPec());
+			} else {
+				ps.setNull(8, java.sql.Types.NULL);
+			}
+			
+			if(contatto.getNote() != null) {
+				ps.setString(9, contatto.getNote());
+			} else {
+				ps.setNull(9, java.sql.Types.NULL);
+			}
 			
 //TODO 		FINIRE DI SISTEMARE	
 			
-//			ps.setString(7, contatto.getPec());
-//			ps.setString(8, contatto.getPasswordPec());
-			ps.setString(2, contatto.getNote());
 			System.out.println("ID CONTATTO: " + idContatto);
 			
-			ps.setInt(3, idContatto);
+			ps.setInt(10, idContatto);
 			
 			result = ps.executeUpdate();
 			
