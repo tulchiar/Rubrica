@@ -14,29 +14,34 @@ public class ContattiDAO_Test {
 				
 		ContattiDAO dao = new ContattiDAO();
 		
+//XXX   INSERIMENTO
 //		dao.insertContatto(new Contatto("Rolanda","Michelagnoli"));
 		
-		Contatto contattoDaCancellare = new Contatto(4);
-		
-		dao.deleteContatto(contattoDaCancellare);
-		
+//XXX	CANCELLAZIONE LOGICA		
+//		Contatto contattoDaCancellare = new Contatto(4);
 //		
+//		dao.deleteContatto(contattoDaCancellare);
+		
+//XXX	RICERCA PER ID
 //		Contatto c = dao.getContattoById(1);
 //		
 //		System.out.println(c);
-//		
+		
+		
+//XXX	MODIFICA CONTATTO
+		Contatto c = new Contatto();
+		c.setNome("Prova");
+		
+		System.out.println("ID CONTATTO TEST:" + dao.getContattoById(1).getIdContatto());
+		
+		dao.updateContatto(dao.getContattoById(1).getIdContatto(), c);
+	
+//XXX	STAMPA ELENCO CONTATTI
 		ArrayList<Contatto> contatti = dao.getContatti();
 		
 		for (Contatto contatto : contatti) {
 			System.out.println(contatto);
-		}
+		}	
 		
-		
-		
-	
-
 	}
-
-
-
 }

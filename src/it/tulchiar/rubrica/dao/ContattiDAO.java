@@ -3,7 +3,9 @@ package it.tulchiar.rubrica.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLData;
 import java.sql.SQLException;
+import java.sql.SQLInput;
 import java.util.ArrayList;
 
 import it.tulchiar.rubrica.bean.Contatto;
@@ -70,6 +72,7 @@ public class ContattiDAO {
 			Contatto c = new Contatto();
 			
 			while (rs.next()) {
+				c.setIdContatto(idContatto);
 				c.setNome(rs.getString("nome"));
 				c.setCognome(rs.getString("cognome"));
 			}
@@ -132,7 +135,7 @@ public class ContattiDAO {
 	}			
 
 	// TODO - SISTEMARE
-	public boolean updateContatto(Contatto contatto) {
+	public boolean updateContatto(Integer idContatto, Contatto contatto) {
 		
 		Connection conn = DBConnect.getConnection();
 		
@@ -140,12 +143,12 @@ public class ContattiDAO {
 				"SET" + 
 				"`nome` = ? ," + 
 				"`cognome` = ? ," + 
-				"`telefono` = ? ," + 
-				"`fax` = ? ," + 
-				"`cellulare` = ? ," + 
-				"`email` = ? ," + 
-				"`pec` = ? ," + 
-				"`passwordPec` = ? ," + 
+//				"`telefono` = ? ," + 
+//				"`fax` = ? ," + 
+//				"`cellulare` = ? ," + 
+//				"`email` = ? ," + 
+//				"`pec` = ? ," + 
+//				"`passwordPec` = ? ," + 
 				"`note` = ? " + 
 				"WHERE `idcontatto` = ?;";
 		
@@ -154,16 +157,51 @@ public class ContattiDAO {
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			ps.setString(1, contatto.getNome());
-			ps.setString(2, contatto.getCognome());
-			ps.setString(3, contatto.getTelefono());
-			ps.setString(4, contatto.getFax());
-			ps.setString(5, contatto.getCellulare());
-			ps.setString(6, contatto.getEmail());
-			ps.setString(7, contatto.getPec());
-			ps.setString(8, contatto.getPasswordPec());
-			ps.setString(9, contatto.getNote());
-			ps.setInt(10, contatto.getIdContatto());
+			if(contatto.getNome() != null) {
+				System.out.println("NOME: " + contatto.getNome());
+				ps.setString(1, contatto.getNome());
+			} else {
+				ps.setNull(1, java.sql.Types.NULL);
+			}
+			
+			if(contatto.getCognome() != null) {
+				ps.setString(2, contatto.getCognome());
+			} else {
+				ps.setNull(2, java.sql.Types.NULL);
+			}
+			
+			if(contatto.getTelefono() != null) {
+				ps.setString(3, contatto.getTelefono());
+			} else {
+				ps.setNull(3, java.sql.Types.NULL);
+			}
+
+			if(contatto.getFax() != null) {
+				ps.setString(4, contatto.getFax());
+			} else {
+				ps.setNull(4, java.sql.Types.NULL);
+			}
+
+			if(contatto.getCellulare() != null) {
+				ps.setString(5, contatto.getCellulare());
+			} else {
+				ps.setNull(5, java.sql.Types.NULL);
+			}
+
+			if(contatto.getEmail() != null) {
+				ps.setString(6, contatto.getEmail());
+			} else {
+				ps.setNull(6, java.sql.Types.NULL);
+			}
+			
+//TODO 		FINIRE DI SISTEMARE	
+			
+//			ps.setString(7, contatto.getPec());
+//			ps.setString(8, contatto.getPasswordPec());
+			ps.setString(2, contatto.getNote());
+			System.out.println("ID CONTATTO: " + idContatto);
+			
+			ps.setInt(3, idContatto);
 			
 			result = ps.executeUpdate();
 			
